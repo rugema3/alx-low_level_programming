@@ -16,14 +16,14 @@ int main(void)
 		putchar(ch);
 		ch++;
 	}
-	char ch = 'A';
+	char h = 'A';
 
-	while (ch <= 'Z')
+	while (h <= 'Z')
 	{
 		putchar(ch);
-		ch++;
+		h++;
 	}
-	/*putchar('\n');*/
+	putchar('\n');
 	return (0);
 
 }
