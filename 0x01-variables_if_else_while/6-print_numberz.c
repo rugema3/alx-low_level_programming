@@ -13,7 +13,8 @@ int main(void)
 
 	while (ch <= 10)
 	{
-		putchar(ch);
+		putchar(ch + '0');
+		/*converting ch to ASCII*/
 		ch++;
 	}
 	putchar('\n');
