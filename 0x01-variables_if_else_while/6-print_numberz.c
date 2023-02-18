@@ -11,7 +11,7 @@ int main(void)
 
 	int  ch = 0;
 
-	while (ch <= 10)
+	while (ch < 10)
 	{
 		putchar(ch + '0');
 		/*converting ch to ASCII*/
