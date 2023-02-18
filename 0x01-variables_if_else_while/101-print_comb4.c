@@ -21,8 +21,8 @@ int main(void)
 			{
 				if (num1 != num2 &&
 				    num1 < num2 &&
-				    num2 != num33 &&
-				    digit2 < num3)
+				    num2 != num3 &&
+				    num2 < num3)
 				{
 					putchar(num1 + 48);
 					putchar(num2 + 48);
