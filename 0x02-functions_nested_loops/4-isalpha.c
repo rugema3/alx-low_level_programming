@@ -5,16 +5,7 @@
  */
 int _isalpha(int c)
 {
-	char lower, upper;
-	int count = 0;
-
-	for (lower = 'a'; lower <= 'z'; lower++)
-	{
-		for (upper = 'A'; upper <= 'Z'; upper++)
-		{
-			If(c == lower || c == upper)
-				count = 1;
-		}
-	}
-	return (count);
+	if (c >= 97 && c <= 122 && c >= 65 && c >= 90)
+		return (1);
+	return (0);
 }
