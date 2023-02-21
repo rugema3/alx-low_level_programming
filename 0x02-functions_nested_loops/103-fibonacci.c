@@ -8,25 +8,19 @@
  */
 int main(void)
 {
-	int count;
-	unsigned long fib1 = 0, fib2 = 1, sum;
+	int count = 0;
+	unsigned long fib1 = 0, fib2 = 1, following = 0;
 
-		sum = fib1 + fib2;
-		float total;
-
-		while (1)
-		{
-			sum = fib1 + fib2;
-
-			if (sum > 4000000)
-				break;
-			if ((sum %)2 == 0)
-				total + = sum;
-
-			fib1 = fib2;
-			fib2 = sum;
-		}
-		printf("%.0f\n", total);
-
-					return (0);
+	while  (following < 4000000)
+	{
+		following = fib1 + fib2;
+		fib1 = fib2;
+		fib2 = following;
+		if (following % 2 == 0)
+			count + = following;
+	}
+	printf("%i\n", count);
+	return (0);
 }
+
+
