@@ -1,5 +1,6 @@
 
 /**
+ * main - entry point
  * print_alphabet - this function prints alphabets in lowercase using _putchar.
  *
  * Return: 0 (Success)
@@ -17,3 +18,16 @@ void print_alphabet(void)
 	_putchar('\n');
 	return (0);
 }
+/**
+ * main - entry point
+ * print_alphabet - explained above
+ * Return: 0 (success)
+ *
+ */
+int main(void)
+{
+
+	print_alphabet();
+	return (0);
+}
+
