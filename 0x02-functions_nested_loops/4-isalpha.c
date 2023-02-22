@@ -4,6 +4,7 @@
  * Return:1 if c is a letter, 0 otherwise
  */
 #include <ctype.h>
+
 int _isalpha(int c)
 {
 	if (isalpha(c))
