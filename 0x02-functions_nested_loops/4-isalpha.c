@@ -3,9 +3,11 @@
  * @c:checks the input
  * Return:1 if c is a letter, 0 otherwise
  */
+#include <ctype.h>
+
 int _isalpha(int c)
 {
-	if (c >= 97 && c <= 122 && c >= 65 && c >= 90)
+	if (isalpha(c))
 		return (1);
 	return (0);
 }
