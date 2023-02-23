@@ -3,6 +3,7 @@
  * return: 0 (success)
  *
  */
+#include"main.h"
 void print_numbers(void);
 {
 	int a = 0;
