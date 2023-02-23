@@ -20,6 +20,6 @@ int main(void)
 		}
 		quotient += 1;
 	}
-	printf("ld\n", larget_prime_factor);
+	printf("%ld\n", largest_prime_factor);
 	return (0);
 }
