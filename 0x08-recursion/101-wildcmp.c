@@ -2,7 +2,7 @@
  * wildcmp - comparing strings
  * @s1: pointer1 to the string parameter
  * @s2:pointer2 to the string parameter
- * Return: 1 or 0
+ * Return: 1 if identical, 0 if not
  */
 int wildcmp(char *s1, char *s2)
 {
