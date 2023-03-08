@@ -13,7 +13,7 @@ int _strlen_recursion(char *s)
 /**
  * _empty - empty string
  * @s: pointer to a string
- * @1: position
+ * @l: position
  * Return: 1 or 0
  *
  */
@@ -28,10 +28,11 @@ int _empty(char *s, int l)
 /**
  * is_palindrome - palindrome
  * @s: pointer to a string
- * Return:
+ * Return: 1 or 0
  */
 int is_palindrome(char *s)
 {
 	int length = _strlen_recursion(s);
+
 	return (_empty(s, length - 1));
 }
