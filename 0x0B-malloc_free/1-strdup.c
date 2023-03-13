@@ -1,12 +1,14 @@
 /**
  * _strdup - Returns a newly allocated space in memory,
  * which contains a copy of the string given as a parameter.
- * @str: Pointer to the string to duplicate.
+ * @str: Pointer to the string to be duplicated.
  *
- * Return: If str is NULL or if memory allocation fails, returns NULL.
+ * Return: If str is NULL or if memory allocation fails,
+ * in either case returns NULL.
  * Otherwise, returns a pointer to the new string.
  */
-#include<stdlib.h>
+#include<stdlib.h> /* this contains our maloc function*/
+
 char *_strdup(char *str)
 {
 	char *new_str;
