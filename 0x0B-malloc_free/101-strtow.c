@@ -2,6 +2,16 @@
 #include <string.h>
 #include <ctype.h>
 
+/**
+ * strtow - Splits a string into words
+ * @str: The string to split
+ *
+ * Return: A pointer to an array of strings (words), or NULL if str is NULL or empty,
+ *         or if memory allocation fails.
+ * Each element of the array contains a single word, null-terminated.
+ * The last element of the array is NULL.
+ */
+
 char **strtow(char *str)
 {
 	char **words = NULL;
@@ -95,4 +105,5 @@ char **strtow(char *str)
 
 	return (words);
 }
+
 
