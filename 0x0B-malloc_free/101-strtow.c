@@ -7,9 +7,10 @@
  * Each element of the array contains a single word, null-terminated.
  * The last element of the array is NULL.
  */
-#include<stdlib.h>
-#include<string.h>
-#include<ctype.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+
 char **strtow(char *str)
 {
     char **words = NULL;
@@ -27,6 +28,9 @@ char **strtow(char *str)
             count++;
             while (!isspace(str[i]) && i < len)
                 i++;
+            /* Skip consecutive whitespace characters */
+            while (isspace(str[i]) && i < len)
+                i++;
         }
     }
 
@@ -40,7 +44,7 @@ char **strtow(char *str)
     k = 0;
     while (i < len) {
         /* Skip leading spaces */
-        while (isspace(str[i]))
+        while (isspace(str[i]) && i < len)
             i++;
 
         /* Find end of current word */
@@ -52,8 +56,10 @@ char **strtow(char *str)
         words[k] = malloc((j - i + 1) * sizeof(char));
         if (words[k] == NULL) {
             /* Memory allocation error, clean up and return NULL */
-            for (i = 0; i < k; i++)
-                free(words[i]);
+            while (k > 0) {
+                k--;
+                free(words[k]);
+            }
             free(words);
             return NULL;
         }
@@ -63,6 +69,10 @@ char **strtow(char *str)
         /* Move to the next word */
         k++;
         i = j;
+
+        /* Skip consecutive whitespace characters */
+        while (isspace(str[i]) && i < len)
+            i++;
     }
 
     /* Set the last element of the array to NULL */
