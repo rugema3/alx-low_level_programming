@@ -9,7 +9,7 @@ int count_words(char *str)
 {
 	int count = 0, i;
 	/* Skip leading spaces */
-	while (*str && *str == '  ')
+	while (*str && *str == ' ')
         str++;
 
 	for (i = 0; *(str + i); i++)
