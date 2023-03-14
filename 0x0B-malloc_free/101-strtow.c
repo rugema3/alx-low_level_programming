@@ -19,6 +19,14 @@ char **strtow(char *str)
     if (str == NULL || *str == '\0')
         return NULL;
 
+    /* Check if the string contains only whitespace characters */
+    for (i = 0; str[i] != '\0'; i++) {
+        if (!isspace(str[i]))
+            break;
+    }
+    if (str[i] == '\0')
+        return NULL;
+
     len = strlen(str);
 
     /* Count the number of words in str */
