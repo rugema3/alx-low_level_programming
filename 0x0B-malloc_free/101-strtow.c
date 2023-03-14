@@ -5,29 +5,21 @@
  * Return: The number of words in the string.
  */
 #include<stdlib.h>
-/**
- * count_words - Count the number of words in a string.
- * @str: Pointer to the input string.
- *
- * Return: The number of words in the string.
- */
 int count_words(char *str)
 {
-    int count = 0, i;
-
-    /* Skip leading spaces */
-    while (*str && *str == ' ')
+	int count = 0, i;
+	/* Skip leading spaces */
+	while (*str && *str == '  ')
         str++;
 
-    for (i = 0; *(str + i); i++)
-    {
-        if (*(str + i) != ' ' && (*(str + i + 1) == ' ' || *(str + i + 1) == '\0'))
-            count++;
-    }
+	for (i = 0; *(str + i); i++)
+	{
+		if (*(str + i) != ' ' && (*(str + i + 1) == ' ' || *(str + i + 1) == '\0'))
+			count++;
+	}
 
-    return (count);
+	return (count);
 }
-
 
 /**
  * strtow - Split a string into words.
