@@ -5,8 +5,10 @@
  * @age: age of the dog
  * @owner: owner of the dog
  *
- * Description: This function initializes a dog structure with the given values.
- * If the pointer to the dog structure is NULL, the function does nothing.
+ * Description: This function initializes a dog
+ * structure with the given values.
+ * If the pointer to the dog structure is NULL,
+ * the function does nothing.
  */
 #include "dog.h"
 #include <stddef.h>
