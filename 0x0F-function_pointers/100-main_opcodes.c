@@ -1,3 +1,4 @@
+#include <stdlib.h>
 /**
  * main - Prints the opcodes of its own main function
  *
