@@ -13,7 +13,6 @@
 void array_iterator(int *array, size_t size, void (*action)(int))
 {
 	size_t i;
-	
 	/**
 	 * The implementation checks if array and action are not null
 	 *  before iterating over the array and calling action with each element.
