@@ -12,7 +12,7 @@ void print_name(char *name, void (*f)(char *))
 {
 	/**
 	 * The implementation checks if name and f are not null before calling f
-	 *  with name as its argument.
+	 * with name as its argument.
 	 */
 	if (name != NULL && f != NULL)
 	{
