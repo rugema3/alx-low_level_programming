@@ -25,10 +25,12 @@ for (i = 2; i < 98; i++)
 	 * number from the previous number
 	 */
 	printf(" %.0f, ", fibo[i]);
+	if (i < 97)
+		printf(",");
+	else
+		printf("\n");
 
 }
-printf("\n");
-
 return (0);
 }
 
