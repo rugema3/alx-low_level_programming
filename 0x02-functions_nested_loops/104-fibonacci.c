@@ -12,10 +12,10 @@ int main(void)
 	 *  A double is used because an int would not hold large numbers.
 	 *  The fibonacci series gets larger pretty quick
 	 */
-	printf("***************************************************************\n");
-	printf("fibo[0]:\t %.0f\n", fibo[0]);
+
+	printf(" %.0f ,", fibo[0]);
 	/* I want the double to come with no decimal places*/
-	printf("fibo[1]:\t %.0f \n", fibo[1]);
+	printf(" %.0f ,", fibo[1]);
 for (i = 2; i < 98; i++)
 {
 
@@ -24,10 +24,10 @@ for (i = 2; i < 98; i++)
 	 * the fibonacci series is obtained by add the obtained
 	 * number from the previous number
 	 */
-	printf("fibo[%d]:\t %.0f\n", i, fibo[i]);
+	printf(" %.0f ,", fibo[i]);
 
 }
-printf("---------------------------------------------------------\n");
+printf("\n");
 
 return (0);
 }
