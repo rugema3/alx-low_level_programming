@@ -13,9 +13,9 @@ int main(void)
 	 *  The fibonacci series gets larger pretty quick
 	 */
 
-	printf(" %.0f ,", fibo[0]);
+	printf(" %.0f, ", fibo[0]);
 	/* I want the double to come with no decimal places*/
-	printf(" %.0f ,", fibo[1]);
+	printf(" %.0f, ", fibo[1]);
 for (i = 2; i < 98; i++)
 {
 
@@ -24,7 +24,7 @@ for (i = 2; i < 98; i++)
 	 * the fibonacci series is obtained by add the obtained
 	 * number from the previous number
 	 */
-	printf(" %.0f ,", fibo[i]);
+	printf(" %.0f, ", fibo[i]);
 
 }
 printf("\n");
