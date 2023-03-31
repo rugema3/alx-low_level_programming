@@ -24,11 +24,15 @@ for (i = 2; i < 98; i++)
 	 * the fibonacci series is obtained by add the obtained
 	 * number from the previous number
 	 */
-	printf(" %.0f, ", fibo[i]);
+	printf(" %.0f", fibo[i]);
 	if (i < 97)
-		printf(",");
+	{
+		printf(", ");
+	}
 	else
+	{
 		printf("\n");
+	}
 
 }
 return (0);
