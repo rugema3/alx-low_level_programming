@@ -4,18 +4,18 @@
 #include <stdlib.h>
 
 /**
- * struct list_s - Singly linked list
- * @str: String (malloc'ed string)
- * @len: Length of the string
- * @next: Pointer to the next node
+ * struct listint_s - singly linked list
+ * @n: integer
+ * @next: points to the next node
  *
- * Description: Singly linked list node structure
- * for Holberton project
+ * Description: singly linked list node structure
+ *
  */
 /* Definition of listint_t type */
-typedef struct listint_s {
-    int n;
-    struct listint_s *next;
+typedef struct listint_s
+{
+	int n;
+	struct listint_s *next;
 } listint_t;
 
 /* Function prototypes */
