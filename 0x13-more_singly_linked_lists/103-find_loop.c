@@ -1,41 +1,33 @@
-#include"lists.h"
+#include <stdlib.h>
+#include "lists.h"
+
 /**
- * find_listint_loop - finds the loop in a linked list
- * @head: pointer to the head of the list
- * Return: pointer to the node where the loop starts,
- * or NULL if there is no loop
- **/
+ * find_listint_loop - finds the first node of a loop in a linked list
+ * @head: pointer to the head of the linked list
+ * Return: pointer to the first node of the loop, or NULL if no loop exists
+*/
 listint_t *find_listint_loop(listint_t *head)
 {
-	listint_t *tortoise = head, *hare = head;
+	listint_t *slow, *fast;
 
-	/**
-	 * Floyd's cycle-finding algorithm.
-	 * The idea is to have two pointers moving through the list at
-	 * different speeds, with one pointer (the hare) moving faster than
-	 * the other (the tortoise). If there is a loop in the list,
-	 * the hare will eventually catch up to the tortoise and they will
-	 * meet at some node in the loop.
-	 */
-
-	/* Step 1: detect the loop */
-	while (hare && hare->next)
+	if (head == NULL || head->next == NULL)
+		return (NULL);
+	slow = head->next;
+	fast = head->next->next;
+	while (fast != NULL && fast->next != NULL)
 	{
-		tortoise = tortoise->next;
-		hare = hare->next->next;
-		if (tortoise == hare)
-			break;
+		if (slow == fast)
+		{
+			slow = head;
+			while (slow != fast)
+			{
+				slow = slow->next;
+				fast = fast->next;
+			}
+			return (slow);
+		}
+		slow = slow->next;
+		fast = fast->next->next;
 	}
-
-	if (!hare || !hare->next)
-		return (NULL); /* no loop */
-	/* Step 2: find the start of the loop */
-	tortoise = head;
-	while (tortoise != hare)
-	{
-		tortoise = tortoise->next;
-		hare = hare->next;
-	}
-	return (tortoise);
+	return (NULL);
 }
-

@@ -34,8 +34,6 @@ listint_t *reverse_listint(listint_t **head);
 size_t print_listint_safe(const listint_t *head);
 size_t free_listint_safe(listint_t **h);
 listint_t *find_listint_loop(listint_t *head);
-size_t listint_len_cycle(const listint_t *head);
-size_t listint_len(const listint_t *h);
 
 /* Helper function prototype */
 int _putchar(char c);
