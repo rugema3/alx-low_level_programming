@@ -35,6 +35,6 @@ void print_binary(unsigned long int n)
 	/* If the number is zero, print a single '0' */
 	if (leading_zeroes)
 		_putchar('0');
-	_putchar('\n');  /* Print a newline character at the end */
+	/* _putchar('\n');  Print a newline character at the end */
 }
 
