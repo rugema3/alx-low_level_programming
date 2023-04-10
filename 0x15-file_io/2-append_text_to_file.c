@@ -6,7 +6,7 @@
  * @filename: The name of the file
  * @text_content: The NULL terminated string to add at the end of the file
  *
- * Return: 0 on success and -1 on failure
+ * Return: 1 on success and -1 on failure
  */
 int append_text_to_file(const char *filename, const char *text_content)
 {
@@ -22,14 +22,12 @@ int append_text_to_file(const char *filename, const char *text_content)
 
 	if (text_content != NULL)
 	{
-		/* Explicitly add newline character to the text content */
-		fprintf(file_ptr, "%s\n", text_content);
-
-		result = 1; /* Set return value to 0 on success */
+		if (fputs(text_content, file_ptr) != EOF)
+			/* Using fputs to write text content */
+			result = 1; /* Set return value to 1 on success */
 	}
 
 	fclose(file_ptr); /* Close file */
 
 	return (result);
 }
-
