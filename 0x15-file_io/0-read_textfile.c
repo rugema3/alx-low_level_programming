@@ -1,5 +1,5 @@
-#include <stdio.h>
-#include"main.h"
+what's wrong with this code:
+#include<stdio.h>
 /**
  * read_textfile - Reads a text file and prints it to the POSIX standard output
  *
@@ -7,7 +7,7 @@
  * @letters: Number of letters to be read and printed
  *
  * Return: Actual number of letters read and printed,
- *         -1 if file cannot be opened or read
+ * or 0 if file cannot be opened or read
  */
 ssize_t read_textfile(const char *filename, size_t letters)
 {
@@ -16,16 +16,22 @@ ssize_t read_textfile(const char *filename, size_t letters)
 	size_t count = 0;
 
 	fh = fopen(filename, "r");
-	if (fh == NULL)
-		return (-1); /* return -1 to indicate file opening failure */
+	/**
+	 * fh is a file handler
+	 * r means the file is in readmode. We wanna read the file
+	 */
 
-	while ((c = fgetc(fh)) != EOF && letters > 0 && count < letters)
+	if (fh != NULL)
 	{
-		count++;
-		putchar(c);
+		while ((c = fgetc(fh)) != EOF && letters > 0)
+		{
+			count++;/*increament the count each time you go through the loop*/
+			putchar(c);
+			letters--; /*decrement letters to be read*/
+		}
+		fclose(fh);
 	}
-	fclose(fh);
-
+	else
+		return (0);
 	return (count);
 }
-
