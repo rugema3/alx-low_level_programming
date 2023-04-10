@@ -22,7 +22,7 @@ ssize_t read_textfile(const char *filename, size_t letters)
 
 	if (fh != NULL)
 	{
-		while ((c = fgetc(fh)) != EOF)
+		while ((c = fgetc(fh)) != EOF && letters > 0)
 		{
 			count++;/*increament the count each time you go through the loop*/
 			putchar(c);
