@@ -1,44 +1,85 @@
+#include <fcntl.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
-#include<stdio.h>
-#include <stdarg.h>
+
+#define BUFFER_SIZE 1024
+
 /**
- * print_error - Prints an error message to stderr
- * @msg: The error message
+ * open_file - Open a file with given flags and mode
+ * @filename: Name of the file to open
+ * @flags: Flags for opening the file (e.g., O_RDONLY, O_WRONLY, etc.)
+ * @mode: Mode for creating the file (used with O_CREAT flag)
+ *
+ * Return: File descriptor of the opened file
  */
-void print_error(const char *msg)
+int open_file(const char *filename, int flags, mode_t mode)
 {
-	dprintf(STDERR_FILENO, "Error: %s\n", msg);
+	int fd = open(filename, flags, mode);
+	if (fd == -1)
+	{
+		perror("Error opening file");
+		exit(EXIT_FAILURE);
+	}
+	return fd;
 }
 
 /**
- * exit_with_error - Print an error message to
- *stderr and exit with an error code.
+ * close_file - Close a file
+ * @fd: File descriptor of the file to close
  *
- * This function takes an error code, an error message format string, and a
- * variable number of arguments to be used with the format string. The error
- * message is formatted using vfprintf() and printed to stderr. The function
- * then exits with the given error code.
- * err_code: The error code to exit with.
- * msg: The error message format string.
- * Additional arguments to be used with the format string.
- *
- * Return: Nothing.
+ * Return: None
  */
-void exit_with_error(int err_code, const char *msg, ...)
+void close_file(int fd)
 {
-	va_list args;
-	/* Create a va_list to store the variable arguments */
-	va_start(args, msg);
-	/* Initialize the va_list with the last named argument (msg) */
+	if (close(fd) == -1)
+	{
+		perror("Error closing file");
+		exit(EXIT_FAILURE);
+	}
+}
 
-	/* Format and print the error message to stderr using vfprintf() */
-	vfprintf(stderr, msg, args);
+/**
+ * copy_file - Copy data from source file to destination file
+ * @file_from: Name of the source file
+ * @file_to: Name of the destination file
+ *
+ * Return: None
+ */
+void copy_file(const char *file_from, const char *file_to)
+{
+	int fd_src, fd_dest;
+	ssize_t bytes_read, bytes_written;
+	char buffer[BUFFER_SIZE];
 
-	va_end(args); /* Clean up the va_list */
+	/* Open source file for reading */
+	fd_src = open_file(file_from, O_RDONLY, 0);
 
-	fprintf(stderr, "\n");
-	/* Print a newline character after the error message */
+	/* Open destination file for writing, create if not exist, truncate if exist */
+	fd_dest = open_file(file_to, O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 
-	exit(err_code); /* Exit the program with the given error code */
+	/* Copy data from source file to destination file */
+	while ((bytes_read = read(fd_src, buffer, BUFFER_SIZE)) > 0)
+	{
+		bytes_written = write(fd_dest, buffer, bytes_read);
+		if (bytes_written == -1)
+		{
+			perror("Error writing to file");
+			exit(EXIT_FAILURE);
+		}
+	}
+
+	if (bytes_read == -1)
+	{
+		perror("Error reading from file");
+		exit(EXIT_FAILURE);
+	}
+
+	/* Close source and destination files */
+	close_file(fd_src);
+	close_file(fd_dest);
+
+	printf("File '%s' copied to '%s' successfully.\n", file_from, file_to);
 }
 
