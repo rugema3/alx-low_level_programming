@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <errno.h>
 
 #define BUFFER_SIZE 1024
 
@@ -52,18 +53,23 @@ void copy_file(const char *file_from, const char *file_to)
 	int fd_src, fd_dest;
 	ssize_t bytes_read, bytes_written;
 	char buffer[BUFFER_SIZE];
-
 	/* Open source file for reading */
 	fd_src = open_file(file_from, O_RDONLY, 0);
-	/**
-	 *  Open destination file for writing, create if not exist,
-	 *  truncate if exist
-	 */
 
+	/* Check if the destination file already exists */
+	if (access(file_to, F_OK) == 0)
+	{
+		/* If the destination file exists, check if it has write permissions */
+		if (access(file_to, W_OK) != 0)
+		{
+			perror("Error: Destination file cannot be overwritten");
+			exit(EXIT_FAILURE);
+		}
+	}
+	/* Open destination file for writing, create if not exist */
 	fd_dest = open_file(file_to, O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR
 			| S_IWUSR | S_IRGRP | S_IROTH);
 	/* Copy data from source file to destination file */
-
 	while ((bytes_read = read(fd_src, buffer, BUFFER_SIZE)) > 0)
 	{
 		bytes_written = write(fd_dest, buffer, bytes_read);
@@ -76,9 +82,8 @@ void copy_file(const char *file_from, const char *file_to)
 	if (bytes_read == -1)
 	{
 		perror("Error reading from file");
-		exit(EXIT_FAILURE);
+		Exit(EXIT_FAILURE);
 	}
-
 	/* Close source and destination files */
 	close_file(fd_src);
 	close_file(fd_dest);
@@ -98,14 +103,32 @@ int main(int argc, char *argv[])
 	const char *file_from; /* Source file name */
 	const char *file_to;   /* Destination file name */
 
-	if (argc != 3)
+	if (argc < 3 || argc > 4)
 	{
-		fprintf(stderr, "Usage: %s <file_from> <file_to>\n", argv[0]);
+		fprintf(stderr, "Usage: %s <file_from> <file_to> [force]\n", argv[0]);
 		exit(EXIT_FAILURE);
 	}
+
 	file_from = argv[1];
 	file_to = argv[2];
+
+	/* Check if source file exists */
+	if (access(file_from, F_OK) == -1)
+	{
+		perror(file_from);
+		exit(EXIT_FAILURE);
+	}
+
+	/* Check if destination file already exists and 'force' flag is not present */
+	if (access(file_to, F_OK) != -1 && argc != 4)
+	{
+		fprintf(stderr, "File %s already exists. Use -f to overwrite.\n", file_to);
+		exit(EXIT_FAILURE);
+	}
+
+	/* Copy the file */
 	copy_file(file_from, file_to);
+
 	return (0);
 }
 
