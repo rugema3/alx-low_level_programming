@@ -1,4 +1,6 @@
-#include"header.h"
+
+#include "header.h"
+
 /**
  * read_elf_header - reads the ELF header from the given file descriptor
  * @fd: the file descriptor of the ELF file
@@ -43,10 +45,8 @@ void check_elf_file(const Elf64_Ehdr* elf_header, const char* filename) {
  * byte of the magic number.
  */
 void display_elf_magic(const Elf64_Ehdr* elf_header) {
-	size_t i;
-
 	printf("  Magic:   ");
-	for ( i = 0; i < sizeof(elf_header->e_ident); i++) {
+	for (int i = 0; i < sizeof(elf_header->e_ident); i++) {
 		printf("%02x ", elf_header->e_ident[i]);
 	}
 	printf("\n");
@@ -106,50 +106,5 @@ void display_elf_osabi(const Elf64_Ehdr* elf_header) {
 		default: printf("unknown"); break;
 	}
 	printf("\n");
-}
-
-
-/**
- * main - entry point for the ELF Header Reader program
- * @argc: the number of arguments passed to the program
- * @argv: an array of strings containing the arguments passed to the program
- *
- * Return: 0 on success, otherwise exit with an error code
- */
-int main(int argc, char **argv)
-{
-	const char *filename;
-	int fd;
-	Elf64_Ehdr elf_header;
-
-	if (argc != 2)
-	{
-		fprintf(stderr, "Usage: %s <elf_file>\n", argv[0]);
-		exit(1);
-	}
-
-	filename = argv[1];
-
-	fd = open(filename, O_RDONLY);
-	if (fd == -1)
-	{
-		perror("open");
-		exit(1);
-	}
-
-	read_elf_header(fd, &elf_header);
-	check_elf_file(&elf_header, filename);
-
-	printf("ELF Header:\n");
-
-	display_elf_magic(&elf_header);
-	display_elf_class(&elf_header);
-	display_elf_data(&elf_header);
-	display_elf_version(&elf_header);
-	display_elf_osabi(&elf_header);
-
-	close(fd);
-
-	return (0);
 }
 
