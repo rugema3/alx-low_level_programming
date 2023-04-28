@@ -1,4 +1,5 @@
-#include<stdio.h>
+#include <stdio.h>
+
 /**
  * read_textfile - Reads a text file and prints it to the POSIX standard output
  *
@@ -15,18 +16,13 @@ ssize_t read_textfile(const char *filename, size_t letters)
 	size_t count = 0;
 
 	fh = fopen(filename, "r");
-	/**
-	 * fh is a file handler
-	 * r means the file is in readmode. We wanna read the file
-	 */
-
 	if (fh != NULL)
 	{
 		while ((c = fgetc(fh)) != EOF && letters > 0)
 		{
-			count++;/*increament the count each time you go through the loop*/
-			putchar(c);
-			letters--; /*decrement letters to be read*/
+			count++;
+			fputc(c, stderr); /* Print to stderr instead of stdout */
+			letters--;
 		}
 		fclose(fh);
 	}
@@ -34,3 +30,4 @@ ssize_t read_textfile(const char *filename, size_t letters)
 		return (0);
 	return (count);
 }
+
