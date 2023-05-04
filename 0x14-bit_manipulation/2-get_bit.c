@@ -1,33 +1,25 @@
-#include"main.h"
+#include "main.h"
+
 /**
- * print_binary - prints the binary representation of a number
- * @num: the number to print in binary
+ * get_bit - returns the value of a bit at a given index
+ * @num: the number to get the bit from
+ * @index: the index of the bit to get, starting from 0
+ *
+ * Return: the value of the bit at index index, or -1 if an error occured
  */
-void print_binary(unsigned long int num)
+int get_bit(unsigned long int num, unsigned int index)
 {
-	/* Create a bit mask with the most significant bit set */
-	unsigned long int bit = 1UL << ((sizeof(unsigned long int) * 8) - 1);
+	/* Check if index is greater than the number of bits in unsigned long int */
+	if (index >= sizeof(unsigned long int) * 8)
+		return (-1);
 
-	/* Flag to indicate if we have printed any 1s yet */
-	int has_printed = 0;
+	/* Shift 1 to the left by index bits */
+	unsigned long int mask = 1UL << index;
 
-	/* Iterate over each bit in the number */
-	for (; bit > 0; bit >>= 1)
-	{
-		/* If the current bit is set, print 1 and set the has_printed flag */
-		if (num & bit)
-		{
-			_putchar('1');
-			has_printed = 1;
-		}
-		/**
-		 * If the current bit is not set and we have already printed a 1,
-		 * or if the current bit is the least significant bit, print 0
-		 */
-		else if (has_printed || bit == 1)
-		{
-			_putchar('0');
-		}
-	}
+	/**
+	 * If the AND of num and the mask is non-zero,
+	 * the bit at index is 1, otherwise 0
+	 */
+	return ((num & mask) != 0);
 }
 
