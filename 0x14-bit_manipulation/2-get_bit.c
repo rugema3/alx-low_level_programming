@@ -9,17 +9,19 @@
  */
 int get_bit(unsigned long int num, unsigned int index)
 {
+	unsigned long int bit_mask;
+
 	/* Check if index is greater than the number of bits in unsigned long int */
 	if (index >= sizeof(unsigned long int) * 8)
 		return (-1);
 
 	/* Shift 1 to the left by index bits */
-	unsigned long int mask = 1UL << index;
+	bit_mask = 1UL << index;
 
 	/**
 	 * If the AND of num and the mask is non-zero,
 	 * the bit at index is 1, otherwise 0
 	 */
-	return ((num & mask) != 0);
+	return ((num & bit_mask) != 0);
 }
 
