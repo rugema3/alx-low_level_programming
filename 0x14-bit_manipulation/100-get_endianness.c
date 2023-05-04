@@ -1,28 +1,32 @@
 #include"main.h"
+
 /**
- * flip_bits - Returns the number of bits that differ between two numbers
- * @num1: First number to compare
- * @num2: Second number to compare
+ * get_endianness - checks the endianness of the system
  *
- * Return: Number of bits that need to be flipped
+ * Return: 0 if big endian, 1 if little endian
  */
-unsigned int flip_bits(unsigned long int num1, unsigned long int num2)
+int get_endianness(void)
 {
-	/* Calculate the XOR of the two numbers */
-	unsigned long int xor_result = num1 ^ num2;
+	/* Create a test value with a known byte order */
+	unsigned int test = 0x76543210;
+	/* Cast a pointer to the test value as a character pointer */
+	char *byte = (char *)&test;
 
-	/* Initialize a bit count variable to 0 */
-	unsigned int bit_count = 0;
-
-	/* Count the number of set bits in the XOR result */
-	for (; xor_result > 0; xor_result >>= 1)
+	/**
+	 * If the first byte of the test value is 0x10,
+	 * then the system is little endian
+	 */
+	if (*byte == 0x10)
 	{
-		/* If the least significant bit is set, increment the bit count */
-		if (xor_result & 1)
-			bit_count++;
+		/* Least significant byte stored first (little endian) */
+		return (1);
 	}
-
-	/* Return the number of bits that need to be flipped */
-	return (bit_count);
+	else
+	{
+		/* If the first byte of the test value is not 0x10, */
+		/*then the system is big endian */
+		/* Most significant byte stored first (big endian) */
+		return (0);
+	}
 }
 
