@@ -1,3 +1,11 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
+#include <string.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <elf.h>
+
 /**
  * print_error - prints error message and exits
  * @msg: error message to print
@@ -180,6 +188,15 @@ void print_header(const char *filename)
 
 	close(fd);
 }
+/**
+ * print_usage_error - prints a usage error message to stderr
+ */
+void print_usage_error(void)
+{
+    fprintf(stderr, "Usage: elf_header <filename>\n");
+    exit(98);
+}
+
 /**
  * main - prints ELF header information
  * @argc: number of command-line arguments
