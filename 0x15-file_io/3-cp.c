@@ -66,7 +66,6 @@ int main(int argc, char *argv[])
  * @filename: the name of the file to open
  * @flags: the flags to use when opening the file
  * @mode: the mode to use when creating the file
- *
  * Return: the file descriptor of the opened file, or -1 on failure
  */
 int open_file(const char *filename, int flags, mode_t mode)
