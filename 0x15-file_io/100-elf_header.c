@@ -162,6 +162,7 @@ void print_header(const char *filename)
 {
 	int fd;
 	Elf64_Ehdr ehdr;
+	Elf32_Ehdr ehdr32;
 
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
@@ -176,15 +177,36 @@ void print_header(const char *filename)
 	if (memcmp(ehdr.e_ident, ELFMAG, SELFMAG) != 0)
 		print_error("File is not an ELF file");
 
-	printf("ELF Header:\n");
-	print_magic(ehdr.e_ident);
-	print_class(ehdr.e_ident[EI_CLASS]);
-	print_data(ehdr.e_ident[EI_DATA]);
-	print_version(ehdr.e_ident[EI_VERSION]);
-	print_osabi(ehdr.e_ident[EI_OSABI]);
-	printf("  ABI Version:                       %d\n", ehdr.e_ident[EI_ABIVERSION]);
-	print_type(ehdr.e_type);
-	print_entry(ehdr.e_entry);
+	if (ehdr.e_ident[EI_CLASS] == ELFCLASS32) {
+		if (lseek(fd, 0, SEEK_SET) == -1)
+			print_error("Could not seek to beginning of file");
+
+		if (read(fd, &ehdr32, sizeof(ehdr32)) != sizeof(ehdr32))
+			print_error("Could not read ELF header");
+
+		if (memcmp(ehdr32.e_ident, ELFMAG, SELFMAG) != 0)
+			print_error("File is not an ELF file");
+
+		printf("ELF Header:\n");
+		print_magic(ehdr32.e_ident);
+		print_class(ehdr32.e_ident[EI_CLASS]);
+		print_data(ehdr32.e_ident[EI_DATA]);
+		print_version(ehdr32.e_ident[EI_VERSION]);
+		print_osabi(ehdr32.e_ident[EI_OSABI]);
+		printf("  ABI Version:                       %d\n", ehdr32.e_ident[EI_ABIVERSION]);
+		print_type(ehdr32.e_type);
+		print_entry(ehdr32.e_entry);
+	} else {
+		printf("ELF Header:\n");
+		print_magic(ehdr.e_ident);
+		print_class(ehdr.e_ident[EI_CLASS]);
+		print_data(ehdr.e_ident[EI_DATA]);
+		print_version(ehdr.e_ident[EI_VERSION]);
+		print_osabi(ehdr.e_ident[EI_OSABI]);
+		printf("  ABI Version:                       %d\n", ehdr.e_ident[EI_ABIVERSION]);
+		print_type(ehdr.e_type);
+		print_entry(ehdr.e_entry);
+	}
 
 	close(fd);
 }
