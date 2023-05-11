@@ -9,13 +9,14 @@
 /**
  * print_error - prints error message and exits
  * @msg: error message to print
+ * @filename: name of the file that caused the error
  *
  * Return: void
  */
-void print_error(const char *msg)
+void print_error(const char *msg, const char *filename)
 {
-	fprintf(stderr, "Error: %s\n", msg);
-	exit(98);
+    fprintf(stderr, "Error: %s: %s\n", filename, msg);
+    exit(98);
 }
 /**
  * print_magic - prints ELF magic number
@@ -166,26 +167,27 @@ void print_header(const char *filename)
 
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
-		print_error("Could not open file");
+		print_error("Could not open file", filename);
 
 	if (lseek(fd, 0, SEEK_SET) == -1)
-		print_error("Could not seek to beginning of file");
+		print_error("Could not seek to beginning of file", filename);
 
 	if (read(fd, &ehdr, sizeof(ehdr)) != sizeof(ehdr))
-		print_error("Could not read ELF header");
+		print_error("Could not read ELF header", filename);
 
 	if (memcmp(ehdr.e_ident, ELFMAG, SELFMAG) != 0)
-		print_error("File is not an ELF file");
+		print_error("File is not an ELF file", filename);
 
-	if (ehdr.e_ident[EI_CLASS] == ELFCLASS32) {
+	if (ehdr.e_ident[EI_CLASS] == ELFCLASS32)
+	{
 		if (lseek(fd, 0, SEEK_SET) == -1)
-			print_error("Could not seek to beginning of file");
+			print_error("Could not seek to beginning of file", filename);
 
 		if (read(fd, &ehdr32, sizeof(ehdr32)) != sizeof(ehdr32))
-			print_error("Could not read ELF header");
+			print_error("Could not read ELF header", filename);
 
 		if (memcmp(ehdr32.e_ident, ELFMAG, SELFMAG) != 0)
-			print_error("File is not an ELF file");
+			print_error("File is not an ELF file", filename);
 
 		if (ehdr32.e_ident[EI_DATA] == ELFDATA2MSB && (ehdr32.e_machine == EM_SPARC || ehdr32.e_machine == EM_SPARCV9))
 		{
