@@ -9,13 +9,12 @@
 /**
  * print_error - prints error message and exits
  * @msg: error message to print
- * @filename: name of the file that caused the error
  *
  * Return: void
  */
-void print_error(const char *msg, const char *filename)
+void print_error(const char *msg)
 {
-	fprintf(stderr, "Error: %s: %s\n", filename, msg);
+	fprintf(stderr, "Error: %s\n", msg);
 	exit(98);
 }
 /**
@@ -167,45 +166,37 @@ void print_header(const char *filename)
 
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
-		print_error("Could not open file", filename);
+		print_error("Could not open file");
 
 	if (lseek(fd, 0, SEEK_SET) == -1)
-		print_error("Could not seek to beginning of file", filename);
+		print_error("Could not seek to beginning of file");
 
 	if (read(fd, &ehdr, sizeof(ehdr)) != sizeof(ehdr))
-		print_error("Could not read ELF header", filename);
+		print_error("Could not read ELF header");
 
 	if (memcmp(ehdr.e_ident, ELFMAG, SELFMAG) != 0)
-		print_error("File is not an ELF file", filename);
+		print_error("File is not an ELF file");
 
-	if (ehdr.e_ident[EI_CLASS] == ELFCLASS32)
-	{
+	if (ehdr.e_ident[EI_CLASS] == ELFCLASS32) {
 		if (lseek(fd, 0, SEEK_SET) == -1)
-			print_error("Could not seek to beginning of file", filename);
+			print_error("Could not seek to beginning of file");
 
 		if (read(fd, &ehdr32, sizeof(ehdr32)) != sizeof(ehdr32))
-			print_error("Could not read ELF header", filename);
+			print_error("Could not read ELF header");
 
 		if (memcmp(ehdr32.e_ident, ELFMAG, SELFMAG) != 0)
-			print_error("File is not an ELF file", filename);
-		
-		if (ehdr32.e_ident[EI_DATA] == ELFDATA2MSB && (ehdr32.e_machine == EM_SPARC || ehdr32.e_machine == EM_SPARCV9))
-		{
-			ehdr.e_type = __bswap_16(ehdr.e_type);
-			ehdr.e_machine = __bswap_16(ehdr.e_machine);
-			ehdr.e_version = __bswap_32(ehdr.e_version);
-			ehdr32.e_entry = __bswap_32(ehdr32.e_entry);
-			ehdr.e_phoff = __bswap_64(ehdr.e_phoff);
-			ehdr.e_shoff = __bswap_64(ehdr.e_shoff);
-			ehdr.e_flags = __bswap_32(ehdr.e_flags);
-			ehdr.e_ehsize = __bswap_16(ehdr.e_ehsize);
-			ehdr.e_phentsize = __bswap_16(ehdr.e_phentsize);
-			ehdr.e_phnum = __bswap_16(ehdr.e_phnum);
-			ehdr.e_shentsize = __bswap_16(ehdr.e_shentsize);
-			ehdr.e_shnum = __bswap_16(ehdr.e_shnum);
-			ehdr.e_shstrndx = __bswap_16(ehdr.e_shstrndx);
-		}
+			print_error("File is not an ELF file");
 
+		printf("ELF Header:\n");
+		print_magic(ehdr32.e_ident);
+		print_class(ehdr32.e_ident[EI_CLASS]);
+		print_data(ehdr32.e_ident[EI_DATA]);
+		print_version(ehdr32.e_ident[EI_VERSION]);
+		print_osabi(ehdr32.e_ident[EI_OSABI]);
+		printf("  ABI Version:                       %d\n", ehdr32.e_ident[EI_ABIVERSION]);
+		print_type(ehdr32.e_type);
+		print_entry(ehdr32.e_entry);
+	} else {
 		printf("ELF Header:\n");
 		print_magic(ehdr.e_ident);
 		print_class(ehdr.e_ident[EI_CLASS]);
@@ -219,14 +210,13 @@ void print_header(const char *filename)
 
 	close(fd);
 }
-
 /**
  * print_usage_error - prints a usage error message to stderr
  */
 void print_usage_error(void)
 {
-	fprintf(stderr, "Usage: elf_header <filename>\n");
-	exit(98);
+    fprintf(stderr, "Usage: elf_header <filename>\n");
+    exit(98);
 }
 
 /**
