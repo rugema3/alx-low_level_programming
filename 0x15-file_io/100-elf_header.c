@@ -7,6 +7,64 @@
 #include <elf.h>
 
 /**
+ * read_uint16 - reads a 16-bit unsigned integer from a buffer
+ * @buf: pointer to the buffer
+ * @big_endian: set to non-zero if the buffer stores
+ * the integer in big-endian format
+ *
+ * Return: the 16-bit unsigned integer
+ */
+uint16_t read_uint16(const uint8_t *buf, int big_endian)
+{
+	if (big_endian)
+		return ((buf[0] << 8) | buf[1]);
+	else
+		return (buf[0] | (buf[1] << 8));
+}
+
+/**
+ * read_uint32 - reads a 32-bit unsigned integer from a buffer
+ * @buf: pointer to the buffer
+ * @big_endian: set to non-zero if the buffer stores the integer in
+ * big-endian format
+ *
+ * Return: the 32-bit unsigned integer
+ */
+uint32_t read_uint32(const uint8_t *buf, int big_endian)
+{
+	if (big_endian)
+		return ((buf[0] << 24) | (buf[1] << 16) | (buf[2] << 8) | buf[3]);
+	else
+		return (buf[0] | (buf[1] << 8) | (buf[2] << 16) | (buf[3] << 24));
+}
+
+/**
+ * read_uint64 - reads a 64-bit unsigned integer from a buffer
+ * @buf: pointer to the buffer
+ * @big_endian: set to non-zero if the buffer stores
+ * the integer in big-endian format
+ *
+ * Return: the 64-bit unsigned integer
+ */
+uint64_t read_uint64(const uint8_t *buf, int big_endian)
+{
+	uint32_t high, low;
+
+	if (big_endian)
+	{
+		high = read_uint32(buf, big_endian);
+		low = read_uint32(buf + 4, big_endian);
+		return (((uint64_t)high << 32) | low);
+	}
+	else
+	{
+		low = read_uint32(buf, big_endian);
+		high = read_uint32(buf + 4, big_endian);
+		return (((uint64_t)high << 32) | low);
+	}
+}
+
+/**
  * print_error - prints error message and exits
  * @msg: error message to print
  *
@@ -162,7 +220,6 @@ void print_header(const char *filename)
 {
 	int fd;
 	Elf64_Ehdr ehdr;
-	Elf32_Ehdr ehdr32;
 
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
@@ -177,35 +234,19 @@ void print_header(const char *filename)
 	if (memcmp(ehdr.e_ident, ELFMAG, SELFMAG) != 0)
 		print_error("File is not an ELF file");
 
-	if (ehdr.e_ident[EI_CLASS] == ELFCLASS32) {
-		if (lseek(fd, 0, SEEK_SET) == -1)
-			print_error("Could not seek to beginning of file");
+	printf("ELF Header:\n");
+	print_magic(ehdr.e_ident);
 
-		if (read(fd, &ehdr32, sizeof(ehdr32)) != sizeof(ehdr32))
-			print_error("Could not read ELF header");
+	if (ehdr.e_ident[EI_CLASS] == ELFCLASS32)
+	{
+		Elf32_Ehdr ehdr32;
 
-		if (memcmp(ehdr32.e_ident, ELFMAG, SELFMAG) != 0)
-			print_error("File is not an ELF file");
-
-		printf("ELF Header:\n");
-		print_magic(ehdr32.e_ident);
-		print_class(ehdr32.e_ident[EI_CLASS]);
-		print_data(ehdr32.e_ident[EI_DATA]);
-		print_version(ehdr32.e_ident[EI_VERSION]);
-		print_osabi(ehdr32.e_ident[EI_OSABI]);
-		printf("  ABI Version:                       %d\n", ehdr32.e_ident[EI_ABIVERSION]);
-		print_type(ehdr32.e_type);
-		print_entry(ehdr32.e_entry);
-	} else {
-		printf("ELF Header:\n");
-		print_magic(ehdr.e_ident);
-		print_class(ehdr.e_ident[EI_CLASS]);
-		print_data(ehdr.e_ident[EI_DATA]);
-		print_version(ehdr.e_ident[EI_VERSION]);
-		print_osabi(ehdr.e_ident[EI_OSABI]);
-		printf("  ABI Version:                       %d\n", ehdr.e_ident[EI_ABIVERSION]);
-		print_type(ehdr.e_type);
-		print_entry(ehdr.e_entry);
+		convert_to_elf32_ehdr(&ehdr, &ehdr32);
+		print_elf32_header(&ehdr32);
+	}
+	else
+	{
+		print_elf64_header(&ehdr);
 	}
 
 	close(fd);
@@ -215,8 +256,8 @@ void print_header(const char *filename)
  */
 void print_usage_error(void)
 {
-    fprintf(stderr, "Usage: elf_header <filename>\n");
-    exit(98);
+	fprintf(stderr, "Usage: elf_header <filename>\n");
+	exit(98);
 }
 
 /**
