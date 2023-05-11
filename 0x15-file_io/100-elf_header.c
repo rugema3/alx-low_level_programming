@@ -189,8 +189,19 @@ void print_header(const char *filename)
 
 		if (ehdr32.e_ident[EI_DATA] == ELFDATA2MSB && (ehdr32.e_machine == EM_SPARC || ehdr32.e_machine == EM_SPARCV9))
 		{
-			/* I am yet to add code here */
-
+			ehdr32.e_type = __bswap_16(ehdr32.e_type);
+			ehdr32.e_machine = __bswap_16(ehdr32.e_machine);
+			ehdr32.e_version = __bswap_32(ehdr32.e_version);
+			ehdr32.e_entry = __bswap_32(ehdr32.e_entry);
+			ehdr32.e_phoff = __bswap_32(ehdr32.e_phoff);
+			ehdr32.e_shoff = __bswap_32(ehdr32.e_shoff);
+			ehdr32.e_flags = __bswap_32(ehdr32.e_flags);
+			ehdr32.e_ehsize = __bswap_16(ehdr32.e_ehsize);
+			ehdr32.e_phentsize = __bswap_16(ehdr32.e_phentsize);
+			ehdr32.e_phnum = __bswap_16(ehdr32.e_phnum);
+			ehdr32.e_shentsize = __bswap_16(ehdr32.e_shentsize);
+			ehdr32.e_shnum = __bswap_16(ehdr32.e_shnum);
+			ehdr32.e_shstrndx = __bswap_16(ehdr32.e_shstrndx);
 		}
 
 		printf("ELF Header:\n");
