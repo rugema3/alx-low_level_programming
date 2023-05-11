@@ -62,16 +62,8 @@ void print_data(uint8_t elf_data)
  */
 void print_version(uint8_t elf_version)
 {
-	if (elf_version == 2)
-	{
-		printf("  Version:                           %d (modified)\n", elf_version);
-	}
-	else
-	{
-		printf("  Version:                           %d (current)\n", elf_version);
-	}
+	printf("  Version:                           %d (current)\n", elf_version);
 }
-
 /**
  * print_osabi - prints ELF OS/ABI
  * @elf_osabi: ELF OS/ABI
@@ -185,8 +177,7 @@ void print_header(const char *filename)
 	if (memcmp(ehdr.e_ident, ELFMAG, SELFMAG) != 0)
 		print_error("File is not an ELF file");
 
-	if (ehdr.e_ident[EI_CLASS] == ELFCLASS32)
-	{
+	if (ehdr.e_ident[EI_CLASS] == ELFCLASS32) {
 		if (lseek(fd, 0, SEEK_SET) == -1)
 			print_error("Could not seek to beginning of file");
 
@@ -202,12 +193,10 @@ void print_header(const char *filename)
 		print_data(ehdr32.e_ident[EI_DATA]);
 		print_version(ehdr32.e_ident[EI_VERSION]);
 		print_osabi(ehdr32.e_ident[EI_OSABI]);
-		printf("  ABI Version:                  %d\n", ehdr32.e_ident[EI_ABIVERSION]);
+		printf("  ABI Version:                       %d\n", ehdr32.e_ident[EI_ABIVERSION]);
 		print_type(ehdr32.e_type);
 		print_entry(ehdr32.e_entry);
-	}
-	else
-	{
+	} else {
 		printf("ELF Header:\n");
 		print_magic(ehdr.e_ident);
 		print_class(ehdr.e_ident[EI_CLASS]);
@@ -226,8 +215,8 @@ void print_header(const char *filename)
  */
 void print_usage_error(void)
 {
-	fprintf(stderr, "Usage: elf_header <filename>\n");
-	exit(98);
+    fprintf(stderr, "Usage: elf_header <filename>\n");
+    exit(98);
 }
 
 /**
