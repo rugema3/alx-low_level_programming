@@ -187,6 +187,12 @@ void print_header(const char *filename)
 		if (memcmp(ehdr32.e_ident, ELFMAG, SELFMAG) != 0)
 			print_error("File is not an ELF file");
 
+		if (ehdr32.e_ident[EI_DATA] == ELFDATA2MSB && (ehdr32.e_machine == EM_SPARC || ehdr32.e_machine == EM_SPARCV9))
+		{
+			/* I am yet to add code here */
+
+		}
+
 		printf("ELF Header:\n");
 		print_magic(ehdr32.e_ident);
 		print_class(ehdr32.e_ident[EI_CLASS]);
@@ -209,14 +215,13 @@ void print_header(const char *filename)
 	}
 
 	close(fd);
-}
-/**
- * print_usage_error - prints a usage error message to stderr
- */
+}/**
+  * print_usage_error - prints a usage error message to stderr
+  */
 void print_usage_error(void)
 {
-    fprintf(stderr, "Usage: elf_header <filename>\n");
-    exit(98);
+	fprintf(stderr, "Usage: elf_header <filename>\n");
+	exit(98);
 }
 
 /**
