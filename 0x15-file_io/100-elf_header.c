@@ -188,13 +188,13 @@ void print_header(const char *filename)
 
 		if (memcmp(ehdr32.e_ident, ELFMAG, SELFMAG) != 0)
 			print_error("File is not an ELF file", filename);
-
-		if (ehdr.e_ident[EI_DATA] == ELFDATA2MSB && (ehdr.e_machine == EM_SPARC || ehdr.e_machine == EM_SPARCV9))
+		
+		if (ehdr32.e_ident[EI_DATA] == ELFDATA2MSB && (ehdr32.e_machine == EM_SPARC || ehdr32.e_machine == EM_SPARCV9))
 		{
 			ehdr.e_type = __bswap_16(ehdr.e_type);
 			ehdr.e_machine = __bswap_16(ehdr.e_machine);
 			ehdr.e_version = __bswap_32(ehdr.e_version);
-			ehdr.e_entry = __bswap_64(ehdr.e_entry);
+			ehdr32.e_entry = __bswap_32(ehdr32.e_entry);
 			ehdr.e_phoff = __bswap_64(ehdr.e_phoff);
 			ehdr.e_shoff = __bswap_64(ehdr.e_shoff);
 			ehdr.e_flags = __bswap_32(ehdr.e_flags);
