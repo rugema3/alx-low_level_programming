@@ -6,6 +6,8 @@
 #include <unistd.h>
 #include <elf.h>
 
+#define EV_CURRENT 1
+
 /**
  * print_error - prints error message and exits
  * @msg: error message to print
@@ -60,6 +62,7 @@ void print_data(uint8_t elf_data)
  *
  * Return: void
  */
+
 void print_version(uint8_t elf_version)
 {
 	printf("  Version:                           %d (current)\n", elf_version);
@@ -196,7 +199,8 @@ void print_header(const char *filename)
 		printf("  ABI Version:                       %d\n", ehdr32.e_ident[EI_ABIVERSION]);
 		print_type(ehdr32.e_type);
 		print_entry(ehdr32.e_entry);
-	} else {
+	} else
+	{
 		printf("ELF Header:\n");
 		print_magic(ehdr.e_ident);
 		print_class(ehdr.e_ident[EI_CLASS]);
