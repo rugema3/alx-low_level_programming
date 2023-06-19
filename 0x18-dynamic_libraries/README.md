@@ -16,7 +16,7 @@
 
 <h1><b>Tasks</b></h1>
 <h2><b>0. A library is not a luxury but one of the necessities of life</b></h2>
-<p>
+<pre>
 Create the dynamic library libdynamic.so containing all the functions listed below:
 int _putchar(char c);
 int _islower(int c);
@@ -38,19 +38,19 @@ char *_strchr(char *s, char c);
 unsigned int _strspn(char *s, char *accept);
 char *_strpbrk(char *s, char *accept);
 char *_strstr(char *haystack, char *needle);
-</p>
+</pre>
 <h2><b>1. Without libraries what have we? We have no past and no future</b></h2>
 <p>
   Create a script that creates a dynamic library called liball.so from all the .c files that are in the current directory.
 </p>
 
 <h2><b>2. Let's call C functions from Python</b></h2>
-<p>
-   know, you’re missing C when coding in Python. So let’s fix that!
+<pre>
+know, you’re missing C when coding in Python. So let’s fix that!
 
 Create a dynamic library that contains C functions that can be called from Python. See example for more detail
-</p>
-<p>
+</pre>
+<pre>
   julien@ubuntu:~/0x18$ cat 100-tests.py
 import random
 import ctypes
@@ -88,16 +88,16 @@ julien@ubuntu:~/0x18$ python3 100-tests.py
 39 / -62 = 0
 39 % -62 = 39
 julien@ubuntu:~/0x18$ 
-</p>
+</pre>
 
 <h2><b>3. Code injection: Win the Giga Millions!</b></h2>
-<p>
-   bought a ticket for the Giga Millions and chose these numbers: 9, 8, 10, 24, 75 + 9. If you could run two commands on the same server where the Giga Millions program runs, could you make me win the Jackpot?
+<pre>
+bought a ticket for the Giga Millions and chose these numbers: 9, 8, 10, 24, 75 + 9. If you could run two commands on the same server where the Giga Millions program runs, could you make me win the Jackpot?
 
 Our mole got us a copy of the program, you can download it here. Our mole also gave us a piece of documentation:
-</p>
+</pre>
 
-<p>
+<pre>
   /* Giga Millions program                                                                                    
   * Players may pick six numbers from two separate pools of numbers:                                                
   * - five different numbers from 1 to 75 and                                                                       
@@ -106,7 +106,7 @@ Our mole got us a copy of the program, you can download it here. Our mole also g
   * Your chances to win the jackpot is 1 in 258,890,850                                                             
   *                                                                                                                 
   * usage: ./gm n1 n2 n3 n4 n5 bonus
-</p>
+</pre>
 <ul>
   <li>You can’t modify the program gm itself as Master Sysadmin Sylvain (MSS) always checks its MD5 before running it.</li>
   <li>The system is an Linux Ubuntu 16.04.</li>
