@@ -3,8 +3,10 @@
 <h1><b>Resources</b></h1>
 
 <h3><b>Read or watch:</b></h3>
+<pre>
 <a href="https://www.youtube.com/watch?v=eW5he5uFBNM">Static and Dynamic Libraries explained</a>
 <a href="https://https://www.youtube.com/watch?v=pkMg_df8gHs&t=35s">Creating a Dynamic Library</a>
+</pre>
 
 <h1><b>General Objectives</b></h1>
 <ul>
