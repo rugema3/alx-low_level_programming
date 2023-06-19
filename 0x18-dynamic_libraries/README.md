@@ -1,6 +1,6 @@
 <h1><b>0x18. C - Dynamic libraries</b></h1>
 
-<h1><b>Resources</b>/h1>
+<h1><b>Resources</b></h1>
 
 <h3><b>Read or watch:</b></h3>
 <a href="https://www.youtube.com/watch?v=eW5he5uFBNM">Static and Dynamic Libraries explained</a>
