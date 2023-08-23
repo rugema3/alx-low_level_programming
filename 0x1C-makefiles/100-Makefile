@@ -24,6 +24,11 @@ CFLAGS = -Wall -Werror -Wextra -pedantic
 
 
 
+# Ensure the clean, oclean, fclean, re rules never fail
+.PHONY: all clean oclean fclean re
+
+
+
 # Build the executable
 all: $(OBJ)
 	$(CC) $(OBJ) -o $(NAME)
@@ -46,5 +51,3 @@ fclean: clean oclean
 # Recompile all source files
 re: fclean all
 
-# Ensure the clean, oclean, fclean, re rules never fail
-.PHONY: all clean oclean fclean re
