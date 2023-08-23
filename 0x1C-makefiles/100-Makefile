@@ -1,0 +1,52 @@
+# Creating a Makefile using variables.
+
+
+
+# Compiler
+CC = gcc
+
+
+# Source files
+SRC = main.c school.c
+
+
+# Object files
+OBJ = $(SRC:.c=.o)
+
+
+# Executable name
+NAME = school
+
+
+# Command for file deletion
+RM = rm -f
+
+# Compiler Flags
+CFLAGS = -Wall -Werror -Wextra -pedantic
+
+
+
+# Build the executable
+all: $(OBJ)
+	$(CC) $(OBJ) -o $(NAME)
+
+
+# Clean temporary files and executable
+clean:
+	$(RM) *~ $(NAME)
+
+
+# Clean object files
+oclean:
+	$(RM) $(OBJ)
+
+
+# Clean temporary files, executable, and object files
+fclean: clean oclean
+
+
+# Recompile all source files
+re: fclean all
+
+# Ensure the clean, oclean, fclean, re rules never fail
+.PHONY: all clean oclean fclean re
