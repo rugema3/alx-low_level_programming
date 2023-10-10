@@ -1,4 +1,5 @@
 #include "search_algos.h"
+#include <stdio.h>
 
 /**
  * interpolation_search - Search for a value in a sorted array using
@@ -22,13 +23,14 @@ int interpolation_search(int *array, size_t size, int value)
 		size_t pos;
 		double slope = (double)(high - low) / (array[high] - array[low]);
 
+		pos = low + (slope * (value - array[low]));
+
 		if (low > high || value < array[low] || value > array[high])
 		{
 			printf("Value checked array[%lu] is out of range\n", pos);
 			return (-1);
 		}
 
-		pos = low + (slope * (value - array[low]));
 		printf("Value checked array[%lu] = [%d]\n", pos, array[pos]);
 
 		if (array[pos] == value)
