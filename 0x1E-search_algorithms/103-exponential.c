@@ -4,7 +4,7 @@
 
 
 /**
- * binary_search - Search for a value in a sorted array using Binary Search.
+ * my_binary_search - Search for a value in a sorted array using Binary Search.
  * @array: Pointer to the first element of the array to search in.
  * @size: Number of elements in the array.
  * @value: The value to search for.
